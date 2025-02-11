@@ -4,10 +4,15 @@ using UnityEngine.InputSystem;
 
 public class FireSystem : MonoBehaviour
 {
-    [SerializeField] GameObject laser;
+    [SerializeField] GameObject[] lasers;
+    [SerializeField] RectTransform crosshair;
     bool isFiring = false;
 
-    // Update is called once per frame
+
+    void Start()
+    {
+        Cursor.visible = false;
+    }
     void Update()
     {
       Shooting();
@@ -18,7 +23,13 @@ public class FireSystem : MonoBehaviour
     }
 
     private void Shooting(){
-        var emissionModule = laser.GetComponent<ParticleSystem>().emission;
-        emissionModule.enabled = isFiring;
+        foreach(GameObject laser in lasers){
+            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            emissionModule.enabled = isFiring;
+        } 
+    }
+
+    private void CrosshairPossition(){
+        crosshair.position = Input.mousePosition;
     }
 }
